@@ -12,16 +12,7 @@ include(external-project-helpers)
 set(configure_string "")
 
 config_option(LibPicotcp LIB_PICOTCP "Build libpicotcp" DEFAULT OFF)
-config_option(
-    LibPicotcpBsd
-    LIB_PICOTCP_BSD
-    "Build libpicotcp with bsd socket support"
-    DEFAULT
-    OFF
-    DEPENDS
-    LibPicotcp
-)
-mark_as_advanced(LibPicotcp LibPicotcpBsd)
+mark_as_advanced(LibPicotcp)
 add_config_library(picotcp "${configure_string}")
 
 if(LibPicotcp)
@@ -66,7 +57,7 @@ if(LibPicotcp)
         \"CROSS_COMPILE=${CROSS_COMPILER_PREFIX}\" \
         \"C_COMPILER=${C_COMPILER}\" \
         ${perf_flags} \
-        make -s -j"
+        make ARCH=aos -s -j"
     )
 
     add_custom_target(get_muslc)
@@ -89,6 +80,7 @@ if(LibPicotcp)
         PATCH_COMMAND
         sed
         -i
+        ''
         "s/(CROSS_COMPILE)gcc/(C_COMPILER)/g"
         picotcp/Makefile
         CONFIGURE_COMMAND

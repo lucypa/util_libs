@@ -9,6 +9,7 @@
 
 #define SEL4
 
+#define ARCHNONE
 #define PICO_SUPPORT_ETH
 #define PICO_SUPPORT_IPV4
 #define PICO_SUPPORT_UDP
